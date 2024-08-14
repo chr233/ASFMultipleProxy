@@ -105,16 +105,14 @@ Bot.json
 
 ```json
 {
-  //ASF 配置
+  //Bot 配置
   "BotBehaviour": 40,
   "Enabled": true,
   "...": "...",
   //代理设置
-  "WebProxy": {
-    "WebProxy": "http://10.10.0.15:1083",
-    "WebProxyUsername": "",
-    "WebProxyPassword": ""
-  }
+  "WebProxy": "http://10.10.0.15:1083",
+  "WebProxyUsername": "",
+  "WebProxyPassword": ""
 }
 ```
 

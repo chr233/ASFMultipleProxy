@@ -253,26 +253,37 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
     {
         if (additionalConfigProperties != null)
         {
+            string? proxyUri = null;
+            string? username = null;
+            string? password = null;
+
             foreach (var (configProperty, configValue) in additionalConfigProperties)
             {
-                if (configProperty == "WebProxy" && configValue.ValueKind == JsonValueKind.Object)
+                if (configValue.ValueKind == JsonValueKind.String)
                 {
-                    try
+                    if (configProperty == "WebProxy")
                     {
-                        var proxy = configValue.ToJsonObject<ProxyData>();
-                        var webProxy = proxy?.TryCreateWebProxy();
-                        if (webProxy != null)
-                        {
-                            var msg = bot.FormatBotResponse(SetNewProxy(bot, webProxy));
-                            ASFLogger.LogGenericWarning(msg);
+                        proxyUri = configValue.GetString();
+                    }
+                    else if (configProperty == "WebProxyUsername")
+                    {
+                        username = configValue.GetString();
+                    }
+                    else if (configProperty == "WebProxyPassword")
+                    {
+                        password = configValue.GetString();
+                    }
+                }
+            }
 
-                            break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        ASFLogger.LogGenericException(ex);
-                    }
+            if (!string.IsNullOrEmpty(proxyUri))
+            {
+                var proxy = new ProxyData(proxyUri, username, password);
+                var webProxy = proxy?.TryCreateWebProxy();
+                if (webProxy != null)
+                {
+                    var msg = bot.FormatBotResponse(SetNewProxy(bot, webProxy));
+                    ASFLogger.LogGenericWarning(msg);
                 }
             }
         }

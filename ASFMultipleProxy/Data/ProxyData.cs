@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 
 namespace ASFMultipleProxy.Data;
 public sealed record ProxyData
@@ -6,6 +6,13 @@ public sealed record ProxyData
     public string? WebProxy { get; init; }
     public string? WebProxyUsername { get; init; }
     public string? WebProxyPassword { get; init; }
+
+    public ProxyData(string? webProxy, string? webProxyUsername, string? webProxyPassword)
+    {
+        WebProxy = webProxy;
+        WebProxyUsername = webProxyUsername;
+        WebProxyPassword = webProxyPassword;
+    }
 
     public WebProxy? TryCreateWebProxy()
     {
