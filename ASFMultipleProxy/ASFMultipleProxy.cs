@@ -2,7 +2,7 @@ using ArchiSteamFarm.Core;
 using ArchiSteamFarm.Helpers.Json;
 using ArchiSteamFarm.Plugins.Interfaces;
 using ArchiSteamFarm.Steam;
-
+using ArchiSteamFarm.Web.GitHub.Data;
 using ASFMultipleProxy.Core;
 using ASFMultipleProxy.Data;
 
@@ -15,14 +15,15 @@ using System.Text.Json;
 namespace ASFMultipleProxy;
 
 [Export(typeof(IPlugin))]
-internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
+internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHubPluginUpdates
 {
     public string Name => "ASF Multiple Proxy";
     public Version Version => MyVersion;
 
-    private bool ASFEBridge;
+    public bool CanUpdate => true;
+    public string RepositoryName => "chr233/ASFMultipleProxy";
 
-    public static PluginConfig Config => Utils.Config;
+    private bool ASFEBridge;
 
     private Timer? StatisticTimer { get; set; }
 
@@ -277,5 +278,21 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
         }
 
         return Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    public Task<ReleaseAsset?> GetTargetReleaseAsset(Version asfVersion, string asfVariant, Version newPluginVersion, IReadOnlyCollection<ReleaseAsset> releaseAssets)
+    {
+        var result = releaseAssets.Count switch
+        {
+            0 => null,
+            1 => //如果找到一个文件，则第一个
+                releaseAssets.First(),
+            _ => //优先下载当前语言的版本
+                releaseAssets.FirstOrDefault(static x => x.Name.Contains(Langs.CurrentLanguage)) ??
+                releaseAssets.FirstOrDefault(static x => x.Name.Contains("en-US"))
+        };
+
+        return Task.FromResult(result);
     }
 }
