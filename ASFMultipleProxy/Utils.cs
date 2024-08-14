@@ -149,6 +149,11 @@ internal static class Utils
         handler.Proxy = proxy;
         handler.UseProxy = true;
 
+        if (proxy.Credentials != null)
+        {
+            handler.PreAuthenticate = true;
+        }
+
         return string.Format(Langs.ApplyNewProxy, proxy.GetProxyAddress());
     }
 
