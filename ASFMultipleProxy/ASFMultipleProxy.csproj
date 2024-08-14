@@ -5,7 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ArchiSteamFarm\ArchiSteamFarm\ArchiSteamFarm.csproj" />
+		<ProjectReference Include="..\ArchiSteamFarm\ArchiSteamFarm\ArchiSteamFarm.csproj">
+		  <Private>False</Private>
+		</ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
