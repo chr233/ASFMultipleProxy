@@ -1,4 +1,5 @@
 using ArchiSteamFarm.Core;
+using ArchiSteamFarm.Helpers.Json;
 using ArchiSteamFarm.Plugins.Interfaces;
 using ArchiSteamFarm.Steam;
 
@@ -26,7 +27,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
     private Timer? StatisticTimer { get; set; }
 
     /// <inheritdoc/>
-    public async Task OnASFInit(IReadOnlyDictionary<string, JsonElement>? additionalConfigProperties = null)
+    public Task OnASFInit(IReadOnlyDictionary<string, JsonElement>? additionalConfigProperties = null)
     {
         PluginConfig? config = null;
 
@@ -38,7 +39,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
                 {
                     try
                     {
-                        config = configValue.Deserialize<PluginConfig>();
+                        config = configValue.ToJsonObject<PluginConfig>();
                         if (config != null)
                         {
                             break;
@@ -72,7 +73,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
 
         if (!Config.EULA)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         // 创建代理
@@ -97,7 +98,6 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
             ASFLogger.LogGenericInfo(Langs.MultProxyDoNotSet);
         }
 
-
         //统计
         if (Config.Statistic && !ASFEBridge)
         {
@@ -112,6 +112,8 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
                 TimeSpan.FromHours(24)
             );
         }
+
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc/>
@@ -256,7 +258,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2
                 {
                     try
                     {
-                        var proxy = configValue.Deserialize<ProxyData>();
+                        var proxy = configValue.ToJsonObject<ProxyData>();
                         var webProxy = proxy?.TryCreateWebProxy();
                         if (webProxy != null)
                         {
