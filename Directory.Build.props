@@ -1,6 +1,7 @@
 <Project>
 	<PropertyGroup>
-		<Version>1.0.1.1</Version>
+		<Version>1.0.2.0
+		</Version>
 		<StandaloneMode>false</StandaloneMode>
 	</PropertyGroup>
 
