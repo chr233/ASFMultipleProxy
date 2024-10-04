@@ -117,14 +117,21 @@ internal static class Utils
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    internal static HttpClientHandler? GetHttpClientHandler(this Bot bot)
+    internal static SocketsHttpHandler? GetHttpClientHandler(this Bot bot)
     {
         var webBrowser = bot.ArchiWebHandler.WebBrowser;
-        var fieldInfo = typeof(WebBrowser).GetField("HttpClientHandler", BindingFlags.NonPublic | BindingFlags.Instance);
+        var fieldInfo = typeof(WebBrowser).GetField("HttpMessageHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         if (fieldInfo != null)
         {
-            var httpClientHandler = fieldInfo.GetValue(webBrowser) as HttpClientHandler;
-            return httpClientHandler;
+            var httpClientHandler = fieldInfo.GetValue(webBrowser);
+            if (httpClientHandler is SocketsHttpHandler socketsHttpHandler)
+            {
+                return socketsHttpHandler;
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
