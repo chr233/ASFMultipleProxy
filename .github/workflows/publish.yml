@@ -9,7 +9,7 @@ env:
   PROJECT_NAME: "ASFMultipleProxy"
   REPO_NAME: "ASFMultipleProxy"
   TARGET_FILTER: "ASFMultipleProxy.dll"
-  DOTNET_SDK_VERSION: 8.0.x
+  DOTNET_SDK_VERSION: 9.0
 
 jobs:
   build:

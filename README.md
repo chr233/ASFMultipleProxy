@@ -48,7 +48,10 @@
 
 | ASFMultipleProxy 版本                                                      | 适配 ASF 版本 | 更新说明       |
 | -------------------------------------------------------------------------- | :-----------: | -------------- |
-| [1.0.1.1](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.1.1) |    6.0.6.4    | ASF -> 6.0.6.4 |
+| [1.1.0.0](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.1.0.0) |    6.1.0.1    | ASF -> 6.1.0.1 |
+| [1.0.3.0](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.3.0) |    6.0.8.7    | ASF -> 6.0.8.7 |
+| [1.0.2.2](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.2.2) |    6.0.7.5    | ASF -> 6.0.8.7 |
+| [1.0.1.1](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.1.1) |    6.0.6.4    | ASF -> 6.0.7.5 |
 | [1.0.0.4](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.0.4) |    6.0.5.2    | 第一个版本     |
 
 ## 插件配置说明
