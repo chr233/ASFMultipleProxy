@@ -72,7 +72,7 @@ internal static class Utils
     /// <summary>
     /// 可用代理列表
     /// </summary>
-    internal static List<IWebProxy> AvilableProxies { get; } = [];
+    internal static List<IWebProxy> AvailableProxies { get; } = [];
 
     /// <summary>
     /// 获取随机代理
@@ -80,13 +80,13 @@ internal static class Utils
     /// <returns></returns>
     internal static IWebProxy? GetRandomProxy()
     {
-        if (AvilableProxies.Count == 0)
+        if (AvailableProxies.Count == 0)
         {
             return null;
         }
 
-        var index = Random.Shared.Next(0, AvilableProxies.Count);
-        return AvilableProxies[index];
+        var index = Random.Shared.Next(0, AvailableProxies.Count);
+        return AvailableProxies[index];
     }
 
     /// <summary>
@@ -170,29 +170,11 @@ internal static class Utils
     internal static Version MyVersion => Assembly.GetExecutingAssembly().GetName().Version ?? new Version("0.0.0.0");
 
     /// <summary>
-    /// 获取ASF版本
-    /// </summary>
-    internal static Version ASFVersion => typeof(ASF).Assembly.GetName().Version ?? new Version("0.0.0.0");
-
-    /// <summary>
     /// 日志
     /// </summary>
     internal static ArchiLogger ASFLogger => ASF.ArchiLogger;
 
-    /// <summary>
-    /// 逗号分隔符
-    /// </summary>
-    internal static readonly char[] SeparatorDot = [','];
-
-    /// <summary>
-    /// 加号分隔符
-    /// </summary>
-    internal static readonly char[] SeparatorPlus = ['+'];
-
-    /// <summary>
-    /// 逗号空格分隔符
-    /// </summary>
-    internal static readonly char[] SeparatorDotSpace = [',', ' '];
+    internal static Uri IpInfoUrl { get; } = new("https://ipinfo.io/");
 
     internal static string? GetProxyAddress(this IWebProxy proxy)
     {

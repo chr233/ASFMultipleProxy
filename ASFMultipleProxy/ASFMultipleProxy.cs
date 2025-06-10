@@ -2,7 +2,6 @@ using ArchiSteamFarm.Core;
 using ArchiSteamFarm.Helpers.Json;
 using ArchiSteamFarm.Plugins.Interfaces;
 using ArchiSteamFarm.Steam;
-using ArchiSteamFarm.Web.GitHub.Data;
 using ASFMultipleProxy.Core;
 using ASFMultipleProxy.Data;
 
@@ -21,6 +20,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
     public Version Version => MyVersion;
 
     public bool CanUpdate => true;
+
     public string RepositoryName => "chr233/ASFMultipleProxy";
 
     private bool ASFEBridge;
@@ -85,14 +85,14 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
                 var webProxy = proxy.TryCreateWebProxy();
                 if (webProxy != null)
                 {
-                    AvilableProxies.Add(webProxy);
+                    AvailableProxies.Add(webProxy);
                 }
             }
         }
 
-        if (AvilableProxies.Count > 0)
+        if (AvailableProxies.Count > 0)
         {
-            ASFLogger.LogGenericInfo(string.Format(Langs.MultProxyLoaded, AvilableProxies.Count));
+            ASFLogger.LogGenericInfo(string.Format(Langs.MultProxyLoaded, AvailableProxies.Count));
         }
         else
         {
@@ -148,7 +148,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
     /// <summary>
     /// 获取插件信息
     /// </summary>
-    private static string? PluginInfo => string.Format("{0} {1}", nameof(ASFMultipleProxy), MyVersion);
+    private static string PluginInfo => string.Format("{0} {1}", nameof(ASFMultipleProxy), MyVersion);
 
     /// <summary>
     /// 处理命令
@@ -159,7 +159,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
     /// <param name="args"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    private static Task<string?>? ResponseCommand(Bot bot, EAccess access, string cmd, string[] args)
+    private static Task<string>? ResponseCommand(Bot bot, EAccess access, string cmd, string[] args)
     {
         int argLength = args.Length;
 
@@ -173,6 +173,11 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
                 "AMP" when access >= EAccess.FamilySharing =>
                     Task.FromResult(PluginInfo),
 
+                "ASFIP" when access >= EAccess.Master =>
+                    Command.ResponseAsfIp(),
+                "BOTIP" when access >= EAccess.Master =>
+                    Command.ResponseBotIp(bot),
+
                 "GETPROXY" when access >= EAccess.Master =>
                     Command.ResponseGetBotProxy(bot),
 
@@ -182,6 +187,9 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
             {
                 "GETPROXY" when access >= EAccess.Master =>
                     Command.ResponseGetBotProxy(Utilities.GetArgsAsText(args, 1, ",")),
+
+                "BOTIP" when access >= EAccess.Master =>
+                    Command.ResponseBotIp(Utilities.GetArgsAsText(args, 1, ",")),
 
                 _ => null,
             }
@@ -205,7 +213,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
         {
             var cmd = args[0].ToUpperInvariant();
 
-            if (cmd.StartsWith("AAT."))
+            if (cmd.StartsWith("AMP."))
             {
                 cmd = cmd[4..];
             }
@@ -245,6 +253,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
 
         var msg = bot.FormatBotResponse(proxy == null ? Langs.NoAvilableProxy : SetNewProxy(bot, proxy));
         ASFLogger.LogGenericWarning(msg);
+
         return Task.CompletedTask;
     }
 
@@ -289,21 +298,5 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
         }
 
         return Task.CompletedTask;
-    }
-
-    /// <inheritdoc/>
-    public Task<ReleaseAsset?> GetTargetReleaseAsset(Version asfVersion, string asfVariant, Version newPluginVersion, IReadOnlyCollection<ReleaseAsset> releaseAssets)
-    {
-        var result = releaseAssets.Count switch
-        {
-            0 => null,
-            1 => //如果找到一个文件，则第一个
-                releaseAssets.First(),
-            _ => //优先下载当前语言的版本
-                releaseAssets.FirstOrDefault(static x => x.Name.Contains(Langs.CurrentLanguage)) ??
-                releaseAssets.FirstOrDefault(static x => x.Name.Contains("en-US"))
-        };
-
-        return Task.FromResult(result);
     }
 }

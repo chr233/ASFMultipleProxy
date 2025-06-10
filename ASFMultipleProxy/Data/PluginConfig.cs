@@ -17,4 +17,8 @@ public sealed record PluginConfig
     /// 多个代理地址
     /// </summary>
     public List<ProxyData>? MultWebProxy { get; set; }
+    /// <summary>
+    /// ipinfo.io Api Token
+    /// </summary>
+    public string? IpInfoToken { get; set; }
 }

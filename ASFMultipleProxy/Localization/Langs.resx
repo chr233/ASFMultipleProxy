@@ -189,4 +189,7 @@
   <data name="ApplyNewProxy" xml:space="preserve">
     <value>设置新代理: {0}</value>
   </data>
+  <data name="TwoItem" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
 </root>

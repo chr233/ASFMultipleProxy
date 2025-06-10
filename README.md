@@ -44,16 +44,6 @@
 [usdt_qr]: https://raw.chrxw.com/chr233/master/usdt_qr.png
 [usdt_img]: https://img.shields.io/badge/USDT-TRC20-2354e6.svg?logo=bitcoin
 
-### 更新日志
-
-| ASFMultipleProxy 版本                                                      | 适配 ASF 版本 | 更新说明       |
-| -------------------------------------------------------------------------- | :-----------: | -------------- |
-| [1.1.0.0](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.1.0.0) |    6.1.0.1    | ASF -> 6.1.0.1 |
-| [1.0.3.0](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.3.0) |    6.0.8.7    | ASF -> 6.0.8.7 |
-| [1.0.2.2](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.2.2) |    6.0.7.5    | ASF -> 6.0.8.7 |
-| [1.0.1.1](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.1.1) |    6.0.6.4    | ASF -> 6.0.7.5 |
-| [1.0.0.4](https://github.com/chr233/ASFMultipleProxy/releases/tag/1.0.0.4) |    6.0.5.2    | 第一个版本     |
-
 ## 插件配置说明
 
 ### 全局配置
@@ -86,20 +76,23 @@ ASF.json
         "WebProxyUsername": "",
         "WebProxyPassword": ""
       }
-    ]
+    ],
+    "IpInfoToken": "Your Token Here"
   }
 }
 ```
 
-| 配置项                       | 类型              | 默认值 | 说明                                                               |
-| ---------------------------- | ----------------- | ------ | ------------------------------------------------------------------ |
-| `EULA`                       | `bool`            | `true` | 是否同意 [EULA](#eula)                                             |
-| `Statistic`                  | `bool`            | `true` | 是否允许发送统计数据, 仅用于统计插件用户数量, 不会发送任何其他信息 |
-| `MultWebProxy`               | `List<ProxyData>` | `null` | 全局代理列表, 所有机器人会设置为列表中随机代理                     |
-| -                            | -                 | -      | -                                                                  |
-| `ProxyData.WebProxy`         | `string`          | `null` | 代理地址                                                           |
-| `ProxyData.WebProxyUsername` | `string`          | `null` | 代理用户名                                                         |
-| `ProxyData.WebProxyPassword` | `string`          | `null` | 代理密码                                                           |
+| 配置项                       | 类型              | 默认值 | 说明                                                                           |
+| ---------------------------- | ----------------- | ------ | ------------------------------------------------------------------------------ |
+| `EULA`                       | `bool`            | `true` | 是否同意 [EULA](#eula)                                                         |
+| `Statistic`                  | `bool`            | `true` | 是否允许发送统计数据, 仅用于统计插件用户数量, 不会发送任何其他信息             |
+| `MultWebProxy`               | `List<ProxyData>` | `null` | 全局代理列表, 所有机器人会设置为列表中随机代理                                 |
+| -                            | -                 | -      | -                                                                              |
+| `ProxyData.WebProxy`         | `str`             | `null` | 代理地址                                                                       |
+| `ProxyData.WebProxyUsername` | `str`             | `null` | 代理用户名                                                                     |
+| `ProxyData.WebProxyPassword` | `str`             | `null` | 代理密码                                                                       |
+| -                            | -                 | -      | -                                                                              |
+| `IpInfoToken`                | `str`             | `null` | 用于获取当前 IP 信息, 前往 [IpInfo.io](https://ipinfo.io/dashboard/token) 获取 |
 
 ### 机器人配置
 
@@ -120,13 +113,11 @@ Bot.json
 }
 ```
 
-| 配置项                       | 类型        | 默认值 | 说明                 |
-| ---------------------------- | ----------- | ------ | -------------------- |
-| `WebProxy`                   | `ProxyData` | `null` | 机器人使用的代理地址 |
-| -                            | -           | -      | -                    |
-| `ProxyData.WebProxy`         | `string`    | `null` | 代理地址             |
-| `ProxyData.WebProxyUsername` | `string`    | `null` | 代理用户名           |
-| `ProxyData.WebProxyPassword` | `string`    | `null` | 代理密码             |
+| 配置项             | 类型     | 默认值 | 说明             |
+| ------------------ | -------- | ------ | ---------------- |
+| `WebProxy`         | `string` | `null` | 代理地址, 可选   |
+| `WebProxyUsername` | `string` | `null` | 代理用户名, 可选 |
+| `WebProxyPassword` | `string` | `null` | 代理密码, 可选   |
 
 ## 插件指令说明
 
@@ -135,4 +126,6 @@ Bot.json
 | 命令               | 缩写  | 权限            | 说明                           |
 | ------------------ | ----- | --------------- | ------------------------------ |
 | `ASFMultipleProxy` | `AAT` | `FamilySharing` | 查看 ASF Multiple Proxy 的版本 |
-| `GETPROXY`         |       | `Master`        | 查看当前机器人使用的代理地址   |
+| `GETPROXY [Bots]`  |       | `Master`        | 查看当前机器人使用的代理地址   |
+| `ASFIP`            |       | `Master`        | 查看 ASF 全局请求的 IP 信息    |
+| `BOTIP [Bots]`     |       | `Master`        | 查看指定机器人的 IP 信息       |
