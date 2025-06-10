@@ -1,7 +1,6 @@
 <Project>
 	<PropertyGroup>
 		<Version>1.1.6.0</Version>
-		<StandaloneMode>false</StandaloneMode>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -28,10 +27,6 @@
 		<RuntimeIdentifiers>linux-arm;linux-arm64;linux-x64;osx-arm64;osx-x64;win-arm64;win-x64</RuntimeIdentifiers>
 		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
 		<TargetFramework>net9.0</TargetFramework>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(StandaloneMode)'=='true'">
-		<DefineConstants>$(DefineConstants);STANDALONE</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
