@@ -104,7 +104,7 @@ ASF.json
 
 | 命令               | 缩写  | 权限            | 说明                           |
 | ------------------ | ----- | --------------- | ------------------------------ |
-| `ASFMultipleProxy` | `AAT` | `FamilySharing` | 查看 ASF Multiple Proxy 的版本 |
+| `ASFMultipleProxy` | `AMP` | `FamilySharing` | 查看 ASF Multiple Proxy 的版本 |
 | `GETPROXY [Bots]`  |       | `Master`        | 查看当前机器人使用的代理地址   |
 | `ASFIP`            |       | `Master`        | 查看 ASF 全局请求的 IP 信息    |
 | `BOTIP [Bots]`     |       | `Master`        | 查看指定机器人的 IP 信息       |

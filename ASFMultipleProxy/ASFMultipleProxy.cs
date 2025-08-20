@@ -14,7 +14,7 @@ using System.Text.Json;
 namespace ASFMultipleProxy;
 
 [Export(typeof(IPlugin))]
-internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHubPluginUpdates
+internal class ASFMultipleProxy : IASF, IBot, IBotCommand2, IGitHubPluginUpdates
 {
     public string Name => "ASF Multiple Proxy";
     public Version Version => MyVersion;
@@ -78,7 +78,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
         }
 
         // 创建代理
-        if (Config.MultWebProxy?.Count > 0)
+        if (Config.MultWebProxy?.Length > 0)
         {
             foreach (var proxy in Config.MultWebProxy)
             {
@@ -249,52 +249,12 @@ internal class ASFMultipleProxy : IASF, IBot, IBotModules, IBotCommand2, IGitHub
     /// <inheritdoc/>
     public Task OnBotInit(Bot bot)
     {
-        var proxy = GetRandomProxy();
-
-        var msg = bot.FormatBotResponse(proxy == null ? Langs.NoAvilableProxy : SetNewProxy(bot, proxy));
-        ASFLogger.LogGenericWarning(msg);
-
-        return Task.CompletedTask;
-    }
-
-    /// <inheritdoc/>
-    public Task OnBotInitModules(Bot bot, IReadOnlyDictionary<string, JsonElement>? additionalConfigProperties)
-    {
-        if (additionalConfigProperties != null)
+        if (bot.BotConfig.WebProxy == null)
         {
-            string? proxyUri = null;
-            string? username = null;
-            string? password = null;
+            var proxy = GetRandomProxy();
 
-            foreach (var (configProperty, configValue) in additionalConfigProperties)
-            {
-                if (configValue.ValueKind == JsonValueKind.String)
-                {
-                    if (configProperty == "WebProxy")
-                    {
-                        proxyUri = configValue.GetString();
-                    }
-                    else if (configProperty == "WebProxyUsername")
-                    {
-                        username = configValue.GetString();
-                    }
-                    else if (configProperty == "WebProxyPassword")
-                    {
-                        password = configValue.GetString();
-                    }
-                }
-            }
-
-            if (!string.IsNullOrEmpty(proxyUri))
-            {
-                var proxy = new ProxyData(proxyUri, username, password);
-                var webProxy = proxy?.TryCreateWebProxy();
-                if (webProxy != null)
-                {
-                    var msg = bot.FormatBotResponse(SetNewProxy(bot, webProxy));
-                    ASFLogger.LogGenericWarning(msg);
-                }
-            }
+            var msg = bot.FormatBotResponse(proxy == null ? Langs.NoAvilableProxy : SetNewProxy(bot, proxy));
+            ASFLogger.LogGenericWarning(msg);
         }
 
         return Task.CompletedTask;
