@@ -96,28 +96,7 @@ ASF.json
 
 ### 机器人配置
 
-> 为机器人设置代理将会覆盖全局设置
-
-Bot.json
-
-```json
-{
-  //Bot 配置
-  "BotBehaviour": 40,
-  "Enabled": true,
-  "...": "...",
-  //代理设置
-  "WebProxy": "http://10.10.0.15:1083",
-  "WebProxyUsername": "",
-  "WebProxyPassword": ""
-}
-```
-
-| 配置项             | 类型     | 默认值 | 说明             |
-| ------------------ | -------- | ------ | ---------------- |
-| `WebProxy`         | `string` | `null` | 代理地址, 可选   |
-| `WebProxyUsername` | `string` | `null` | 代理用户名, 可选 |
-| `WebProxyPassword` | `string` | `null` | 代理密码, 可选   |
+> 已经移除相关支持, ArchiSteamFarm 已经支持为机器人独立设置代理, 参加 [Wiki](https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration#bot-config)
 
 ## 插件指令说明
 
