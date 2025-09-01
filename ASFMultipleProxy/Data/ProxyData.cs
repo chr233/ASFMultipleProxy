@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace ASFMultipleProxy.Data;
 public sealed record ProxyData
@@ -7,12 +8,8 @@ public sealed record ProxyData
     public string? WebProxyUsername { get; init; }
     public string? WebProxyPassword { get; init; }
 
-    public ProxyData(string? webProxy, string? webProxyUsername, string? webProxyPassword)
-    {
-        WebProxy = webProxy;
-        WebProxyUsername = webProxyUsername;
-        WebProxyPassword = webProxyPassword;
-    }
+    [JsonConstructor]
+    private ProxyData() { }
 
     public WebProxy? TryCreateWebProxy()
     {

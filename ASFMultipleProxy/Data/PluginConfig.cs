@@ -21,7 +21,7 @@ public record PluginConfig
     /// 多个代理地址
     /// </summary>
     [JsonPropertyName("MultWebProxy")]
-    public ProxyData[]? MultWebProxy { get; set; }
+    public List<ProxyData>? MultWebProxy { get; set; }
     /// <summary>
     /// ipinfo.io Api Token
     /// </summary>

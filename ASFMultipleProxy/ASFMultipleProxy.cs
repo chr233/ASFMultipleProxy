@@ -78,7 +78,7 @@ internal class ASFMultipleProxy : IASF, IBot, IBotCommand2, IGitHubPluginUpdates
         }
 
         // 创建代理
-        if (Config.MultWebProxy?.Length > 0)
+        if (Config.MultWebProxy?.Count > 0)
         {
             foreach (var proxy in Config.MultWebProxy)
             {
