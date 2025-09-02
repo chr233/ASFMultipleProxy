@@ -96,15 +96,15 @@ internal static class Command
     internal static async Task<string> ResponseAsfIp()
     {
         var response = await GetIpInformation(ASF.WebBrowser).ConfigureAwait(false);
-        var result = ParseIpInfoResponse("Global Ip:", response);
+        var result = ParseIpInfoResponse("Global Ip info:", response);
         return FormatStaticResponse(result);
     }
 
     internal static async Task<string> ResponseBotIp(Bot bot)
     {
         var response = await GetIpInformation(bot.ArchiWebHandler.WebBrowser).ConfigureAwait(false);
-        var result = ParseIpInfoResponse($"{bot.BotName}'s Ip:", response);
-        return FormatStaticResponse(result);
+        var result = ParseIpInfoResponse("Ip info:", response);
+        return bot.FormatBotResponse(result);
     }
 
     internal static async Task<string> ResponseBotIp(string botNames)
